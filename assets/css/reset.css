@@ -1,0 +1,15 @@
+/*
+ * Only for projects WITHOUT Tailwind: the components assume what Tailwind's preflight provides.
+ * Load it first. It sits in a layer on purpose: unlayered, it would outrank everything in
+ * `@layer components` and strip the padding and backgrounds from every control.
+ */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; border: 0 solid; margin: 0; padding: 0; }
+  html { line-height: 1.5; -webkit-text-size-adjust: 100%; }
+  button, input, select, textarea { font: inherit; letter-spacing: inherit; color: inherit; background: transparent; border-radius: 0; }
+  h1, h2, h3, h4 { font-size: inherit; font-weight: inherit; }
+  ol, ul { list-style: none; }
+  a { color: inherit; text-decoration: inherit; }
+  svg { display: block; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}

@@ -1,0 +1,105 @@
+/* Airy Coastal design tokens. Light hexes are the designed values: change them only deliberately. */
+
+/* Registered as a colour so changing the accent cross-fades everything derived from it. */
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2a9d8f;
+}
+
+:root {
+  color-scheme: light;
+  --accent: #2a9d8f;
+  --accent-fg: #0b0b0d;
+  --accent-ink: color-mix(in srgb, var(--accent) 62%, black);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --accent-glow: color-mix(in srgb, var(--accent) 11%, transparent);
+
+  --bg: #f8f8f6;
+  --surface: #ffffff;
+  --surface-solid: #ffffff;
+  --surface-raised: #ffffff;
+  --thumb: #ffffff;
+  --dock-closed: 46px;
+  --dock-open: 118px;
+  --fill: rgba(20, 28, 34, 0.04);
+  --hairline: rgba(20, 28, 34, 0.07);
+  --hairline-strong: rgba(20, 28, 34, 0.14);
+  --shadow: 0 1px 1px rgba(20, 28, 34, 0.02), 0 16px 36px -30px rgba(20, 28, 34, 0.14);
+  --shadow-float: 0 1px 3px rgba(20, 28, 34, 0.04), 0 20px 40px -18px rgba(20, 28, 34, 0.2);
+  --ink: #15191c;
+  --ink-2: #4b5157;
+  --ink-3: #6d737a;
+  --track: rgba(20, 28, 34, 0.06);
+  --debit: #9e3b26;
+  --debit-soft: #c95238;
+  --warn: #9e3b26;
+  --warn-soft: rgba(233, 196, 106, 0.26);
+
+  /* Coastal palette. Members alternate cool and warm: that order clears the colour-blind check. */
+  --series-1: #264653;
+  --series-2: #e76f51;
+  --series-3: #2a9d8f;
+  --series-4: #e9c46a;
+  --series-5: #9e3b26;
+  --series-6: #8ec18e;
+  --series-7: #28646b;
+  --series-8: #f4a261;
+  --series-rest: #a1a1aa;
+
+  --cat-1: #264653;
+  --cat-2: #28646b;
+  --cat-3: #2a9d8f;
+  --cat-4: #5bb196;
+  --cat-5: #8ec18e;
+  --cat-6: #e9c46a;
+  --cat-7: #f4a261;
+  --cat-8: #e76f51;
+  --cat-9: #c95238;
+
+  --font-sans: var(--font-geist, "Geist"), -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  transition: --accent 0.5s ease;
+}
+
+.dark {
+  color-scheme: dark;
+  --accent-ink: color-mix(in srgb, var(--accent) 62%, white);
+  --accent-soft: color-mix(in srgb, var(--accent) 20%, transparent);
+  --accent-glow: color-mix(in srgb, var(--accent) 13%, transparent);
+
+  --bg: #0c0e10;
+  --surface: #15181b;
+  --surface-solid: #15181b;
+  --surface-raised: #1b1f22;
+  --thumb: rgba(255, 255, 255, 0.11);
+  --fill: rgba(255, 255, 255, 0.06);
+  --hairline: rgba(255, 255, 255, 0.07);
+  --hairline-strong: rgba(255, 255, 255, 0.15);
+  --shadow: none;
+  --shadow-float: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
+  --ink: #f1f2f3;
+  --ink-2: #bcc1c6;
+  --ink-3: #8f959b;
+  --track: rgba(255, 255, 255, 0.08);
+  --debit: #ee8959;
+  --debit-soft: #e76f51;
+  --warn: #e9c46a;
+  --warn-soft: rgba(233, 196, 106, 0.13);
+
+  /* The darkest blues vanish on a near-black surface, so only those are lifted. */
+  --series-1: #8fb8cc;
+  --series-2: #e76f51;
+  --series-3: #2a9d8f;
+  --series-4: #e9c46a;
+  --series-5: #c95238;
+  --series-6: #8ec18e;
+  --series-7: #3e8a93;
+  --series-8: #f4a261;
+  --series-rest: #71717a;
+
+  --cat-1: #8fb8cc;
+  --cat-2: #3a7f88;
+}

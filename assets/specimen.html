@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Airy Coastal Specimen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/components.css">
+<style>
+  /* Layout only: real projects use Tailwind or their own utilities here. */
+  .wrap { max-width: 672px; margin-inline: auto; padding: 4px 16px 144px; display: flex; flex-direction: column; gap: 24px; }
+  .bar { max-width: 672px; margin-inline: auto; height: 64px; display: flex; align-items: center; gap: 2px; padding-inline: 12px; }
+  .grow { flex: 1; min-width: 0; }
+  .top-title { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; padding-inline: 8px; }
+  .top-sub { display: block; font-size: 12px; color: var(--ink-3); padding-inline: 8px; }
+  .stack { display: flex; flex-direction: column; gap: 8px; }
+  .wrap-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+  .note { font-size: 14px; color: var(--ink-3); margin-top: 8px; }
+  .group-head { display: flex; justify-content: space-between; align-items: baseline; padding-inline: 12px; font-size: 14px; font-weight: 500; }
+  .group-head .num { font-size: 12px; font-weight: 400; color: var(--ink-3); }
+  .row { display: flex; width: 100%; align-items: center; gap: 12px; padding: 10px; border-radius: 14px; text-align: left; cursor: pointer; }
+  .row-title { display: block; font-size: 14px; font-weight: 500; }
+  .row-value { font-size: 14px; font-weight: 500; margin-left: auto; }
+  .tile { width: 36px; height: 36px; }
+  .pad { padding: 20px; }
+  .tight { padding: 4px; overflow: hidden; }
+  .swatches { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; }
+  .two { display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; }
+  .bar-row { display: block; margin-top: 12px; font-size: 13px; }
+  .bar-row .bar-track { margin-top: 6px; }
+  .bar-head { display: flex; justify-content: space-between; }
+  .sheet-body { padding: 12px 24px 24px; overflow-y: auto; }
+  .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px 0 24px; }
+  .sheet-foot { padding: 12px 24px max(14px, env(safe-area-inset-bottom)); border-top: 1px solid var(--hairline); display: flex; align-items: center; gap: 12px; }
+  .dock-bar { position: fixed; inset: auto 0 0; z-index: 20; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px max(14px, env(safe-area-inset-bottom)); pointer-events: none; }
+  .dock, .dock-add { pointer-events: auto; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-list" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></g>
+    <g id="i-chart" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21v-6M12 21V3M19 21V9"/></g>
+    <g id="i-check" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></g>
+    <g id="i-plus" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></g>
+    <g id="i-x" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></g>
+    <g id="i-theme" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></g>
+    <g id="i-pen" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></g>
+    <g id="i-book" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5ZM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></g>
+  </defs>
+</svg>
+
+<header class="top-bar" style="position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top)">
+  <div class="bar">
+    <div class="grow"><span class="top-title">Airy Coastal</span><span class="top-sub">Design specimen · 2 themes</span></div>
+    <button type="button" class="icon-btn" id="theme" aria-label="切換明暗主題"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#i-theme"/></svg></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero-block" style="padding:12px 4px 0">
+    <p class="micro" style="margin-bottom:8px">THIS WEEK</p>
+    <span class="hero-number num"><span class="unit">HRS</span>128.5</span>
+    <p class="note">12 items · 3 days</p>
+  </section>
+
+  <div class="scroll-row scroll-bleed" role="group" aria-label="Category">
+    <button type="button" class="chip" style="--cat:var(--cat-1)" aria-pressed="true"><span class="chip-dot"></span>DESIGN</button>
+    <button type="button" class="chip" style="--cat:var(--cat-3)" aria-pressed="false"><span class="chip-dot"></span>BUILD</button>
+    <button type="button" class="chip" style="--cat:var(--cat-5)" aria-pressed="false"><span class="chip-dot"></span>REVIEW</button>
+    <button type="button" class="chip" style="--cat:var(--cat-6)" aria-pressed="false"><span class="chip-dot"></span>RESEARCH</button>
+    <button type="button" class="chip" style="--cat:var(--cat-7)" aria-pressed="false"><span class="chip-dot"></span>WRITING</button>
+    <button type="button" class="chip" style="--cat:var(--cat-8)" aria-pressed="false"><span class="chip-dot"></span>MEETING</button>
+  </div>
+
+  <section class="stack rise" style="--i:0;gap:6px">
+    <header class="group-head"><span>11/03 週二</span><span class="num">42.0</span></header>
+    <div class="card tight">
+      <button type="button" class="list-row row"><span class="cat-tile tile" style="--cat:var(--cat-1)"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-pen"/></svg></span><span class="grow"><span class="row-title">首頁視覺改版</span><span class="meta" style="display:block">介面設計 · 小安 → 全組</span></span><span class="num row-value">18.5</span></button>
+      <button type="button" class="list-row row"><span class="cat-tile tile" style="--cat:var(--cat-6)"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span class="grow"><span class="row-title">使用者訪談整理</span><span class="meta" style="display:block">研究 · 阿哲 → 小安</span></span><span class="num row-value">23.5</span></button>
+    </div>
+  </section>
+
+  <section class="card pad rise" style="--i:1">
+    <h3 class="micro">BY CATEGORY</h3>
+    <span class="bar-row"><span class="bar-head"><span>BUILD</span><span class="num">52%</span></span><span class="bar-track"><span class="bar-fill" style="--i:0;width:100%;background:var(--cat-3)"></span></span></span>
+    <span class="bar-row"><span class="bar-head"><span>RESEARCH</span><span class="num">29%</span></span><span class="bar-track"><span class="bar-fill" style="--i:1;width:56%;background:var(--cat-6)"></span></span></span>
+    <span class="bar-row"><span class="bar-head"><span>MEETING</span><span class="num">19%</span></span><span class="bar-track"><span class="bar-fill" style="--i:2;width:37%;background:var(--cat-8)"></span></span></span>
+  </section>
+
+  <section class="card pad stack rise" style="--i:2;gap:16px">
+    <h3 class="micro">ACCENT</h3>
+    <div class="swatches" id="swatches"></div>
+    <div class="segmented" style="--count:3;--index:0" id="seg" role="group" aria-label="Range">
+      <span class="segmented-thumb" aria-hidden="true"></span>
+      <button type="button" class="segmented-item" aria-pressed="true">DAY</button>
+      <button type="button" class="segmented-item" aria-pressed="false">WEEK</button>
+      <button type="button" class="segmented-item" aria-pressed="false">MONTH</button>
+    </div>
+    <div class="wrap-row">
+      <button type="button" class="pill" aria-pressed="true">小安</button>
+      <button type="button" class="pill" aria-pressed="false">阿哲</button>
+      <button type="button" class="pill pill-caps" aria-pressed="false">INCLUDE ARCHIVED</button>
+    </div>
+    <div class="wrap-row" style="align-items:center">
+      <button type="button" class="btn btn-primary" id="open">OPEN SHEET</button>
+      <button type="button" class="btn btn-ghost">CANCEL</button>
+      <button type="button" class="btn btn-danger">DELETE</button>
+    </div>
+  </section>
+
+  <section class="card pad stack rise" style="--i:3;gap:12px;flex-direction:row;align-items:center">
+    <svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--accent-ink);flex-shrink:0"><use href="#i-check"/></svg>
+    <p style="font-size:14px">Everything is square.</p>
+  </section>
+</main>
+
+<nav class="dock-bar" aria-label="Main">
+  <div class="dock">
+    <span class="dock-indicator" id="dock-ind" style="--index:0"></span>
+    <button type="button" class="dock-item" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-list"/></svg><span class="dock-label">FEED</span></button>
+    <button type="button" class="dock-item"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-chart"/></svg><span class="dock-label">ANALYTICS</span></button>
+    <button type="button" class="dock-item"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-check"/></svg><span class="dock-label">DONE</span></button>
+  </div>
+  <button type="button" class="dock-add" id="add" aria-label="ADD"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>
+</nav>
+
+<dialog class="sheet" id="sheet" aria-label="NEW ITEM" tabindex="-1">
+  <div class="sheet-handle">
+    <div class="grabber" aria-hidden="true"></div>
+    <header class="sheet-head"><h2 class="micro">NEW ITEM</h2><button type="button" class="icon-btn" id="close" aria-label="Close"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#i-x"/></svg></button></header>
+  </div>
+  <div class="sheet-body sheet-stack stack" style="gap:24px">
+    <div style="display:flex;align-items:baseline;gap:8px"><label class="micro" for="amt">HRS</label><input id="amt" class="amount-field" inputmode="decimal" placeholder="0"></div>
+    <div class="two">
+      <div class="stack"><label class="micro" for="d">DATE</label><input id="d" class="field" type="date"></div>
+      <div class="stack"><label class="micro" for="t">TITLE</label><input id="t" class="field" placeholder="首頁視覺改版"></div>
+    </div>
+  </div>
+  <footer class="sheet-foot"><div class="grow"><p class="micro" style="font-size:10px">TOTAL</p><p class="num" style="font-size:18px;font-weight:300">128.5</p></div><button type="button" class="btn btn-primary" style="padding-inline:32px">ADD</button></footer>
+</dialog>
+
+<script>
+  const PALETTE = ["#1B323C","#264653","#28646B","#29817D","#2A9D8F","#5BB196","#8EC18E","#BDD07C","#E9C46A","#EEB365","#F4A261","#EE8959","#E76F51","#C95238","#9E3B26"];
+  const root = document.documentElement;
+  const params = new URLSearchParams(location.search);
+  const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const luminance = (rgb) => {
+    const [r, g, b] = rgb.map((v) => { const c = v / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contrast = (a, b) => { const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x); return (hi + 0.05) / (lo + 0.05); };
+  // Same rule as accentForTheme in react/palette.ts.
+  const paintable = (hex) => {
+    const dark = root.classList.contains("dark");
+    const surface = channels(dark ? "#15181b" : "#ffffff");
+    const min = dark ? 3 : 1.4;
+    let rgb = channels(hex);
+    if (contrast(rgb, surface) >= min) return hex;
+    for (let i = 0; i < 24 && contrast(rgb, surface) < min; i += 1) rgb = rgb.map((v) => Math.round(v + ((dark ? 255 : 0) - v) * 0.08));
+    return "#" + rgb.map((v) => v.toString(16).padStart(2, "0")).join("");
+  };
+  // ?theme=dark, ?accent=E76F51 and ?sheet=1 make a state easy to link or screenshot.
+  let accent = params.get("accent") ? "#" + params.get("accent").toUpperCase() : "#2A9D8F";
+  const paint = () => {
+    const c = paintable(accent);
+    root.style.setProperty("--accent", c);
+    root.style.setProperty("--accent-fg", luminance(channels(c)) > 0.179 ? "#0b0b0d" : "#ffffff");
+  };
+  const box = document.getElementById("swatches");
+  PALETTE.forEach((hex) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "swatch"; b.style.background = hex; b.style.setProperty("--swatch", hex);
+    b.setAttribute("aria-label", hex); b.setAttribute("aria-pressed", String(hex === accent));
+    b.onclick = () => { accent = hex; box.querySelectorAll(".swatch").forEach((s) => s.setAttribute("aria-pressed", String(s === b))); paint(); };
+    box.append(b);
+  });
+  const setTheme = (dark) => { root.classList.toggle("dark", dark); paint(); };
+  document.getElementById("theme").onclick = (e) => {
+    const next = !root.classList.contains("dark");
+    if (!document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) return setTheme(next);
+    const { clientX: x, clientY: y } = e;
+    root.style.setProperty("--reveal-x", x + "px");
+    root.style.setProperty("--reveal-y", y + "px");
+    root.style.setProperty("--reveal-r", Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + "px");
+    root.classList.add("theme-switching");
+    document.startViewTransition(() => setTheme(next)).finished.finally(() => root.classList.remove("theme-switching"));
+  };
+  document.querySelectorAll(".pill, .chip").forEach((el) => { el.onclick = () => el.setAttribute("aria-pressed", String(el.getAttribute("aria-pressed") !== "true")); });
+  const seg = document.getElementById("seg");
+  seg.querySelectorAll(".segmented-item").forEach((item, i) => { item.onclick = () => { seg.style.setProperty("--index", i); seg.querySelectorAll(".segmented-item").forEach((s) => s.setAttribute("aria-pressed", String(s === item))); }; });
+  const items = document.querySelectorAll(".dock-item");
+  items.forEach((item, i) => { item.onclick = () => { items.forEach((s) => s.removeAttribute("aria-current")); item.setAttribute("aria-current", "page"); document.getElementById("dock-ind").style.setProperty("--index", i); }; });
+  const sheet = document.getElementById("sheet");
+  const openSheet = () => { sheet.classList.remove("is-closing"); sheet.showModal(); sheet.focus(); };
+  const closeSheet = () => { sheet.classList.add("is-closing"); setTimeout(() => sheet.close(), 190); };
+  document.getElementById("open").onclick = openSheet;
+  document.getElementById("add").onclick = openSheet;
+  document.getElementById("close").onclick = closeSheet;
+  sheet.addEventListener("cancel", (e) => { e.preventDefault(); closeSheet(); });
+  sheet.addEventListener("click", (e) => { if (e.target === sheet) closeSheet(); });
+  setTheme(params.get("theme") === "dark");
+  if (params.get("sheet")) openSheet();
+</script>
+</body>
+</html>
